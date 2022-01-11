@@ -3,35 +3,57 @@
 
 
 import random
-
-def guess(x):
-    random_number = random.randint(1, x)
-    guess = 0
-    while guess != random_number:
-        guess = int(input(f'Guess a number between 1 and {x}: '))
-        if guess < random_number:
-            print('Sorry, guess again. Too low.')
-        elif guess > random_number:
-            print('Sorry, guess again. Too high.')
-
-    print(f'Yay, congrats. You have guessed the number {random_number} correctly!!')
-
-def computer_guess(x):
-    low = 1
-    high = x
-    feedback = ''
-    while feedback != 'c':
-        if low != high:
-            guess = random.randint(low, high)
-        else:
-            guess = low  # could also be high b/c low = high
-        feedback = input(f'Is {guess} too high (H), too low (L), or correct (C)?? ').lower()
-        if feedback == 'h':
-            high = guess - 1
-        elif feedback == 'l':
-            low = guess + 1
-
-    print(f'Yay! The computer guessed your number, {guess}, correctly!')
-
-
-guess(10)
+# core logic of the game
+print('Welcome to the number guess game')
+print('Enter your numbers from 1 to 20')
+print('*' * 30)
+print('you have only 3 chances to guess correct no: ')
+print('*' * 30)
+wallet=0
+play_again= True
+while play_again:
+    if wallet <10:
+        amt=int(input('Kindly recharge with min 10/per game: '))
+        wallet+=amt
+       
+    if wallet<=10:
+        print('Insufficient Recharge amount to play the game: ')
+    if wallet > 9:
+        print('10 Rs deducted for this game')
+        wallet-=10
+        c_guess = random.randint(1,20)
+        for chance in range (1,4):
+          u_guess= int(input('enter a guess: '))
+          if u_guess== c_guess:
+            # True Part
+            print('Congratz,you guessed correctly')
+            if chance==1:
+                print('you have won 100 Rs')
+                wallet+=100
+            elif chance==2:
+                print('you have won 80 Rs')
+                wallet+=80
+            else:
+                print('you have won 60 Rs')
+                wallet+=60
+            break
+             #Default
+          else:
+           print('sorry,you guess is wrong')
+           # Provide hint
+           if u_guess < c_guess:
+              print('I am thinking of a bigger number')
+           else:
+                print('I am thinking of a smaller number')
+    choice=input('Do you want to play again [yes/no]: ')
+    if choice !='yes':
+     play_again= False
+     wd=input('Do you want to withdraw [yes/no]: ')
+     if wd=='yes':
+        wd_amt=int(input('Enter the amount: ' ))
+        if wd_amt <=wallet:
+           print(f'{wd_amt} is transferred to: ')
+           wallet -= wd_amt
+     else:
+           print(' Thanks for the donation ')
+print('Thanks for playing')
